@@ -23,6 +23,19 @@ interface StreamEvent {
   error?: string;
 }
 
+function normalizeSources(raw: unknown): MessageSourceRef[] {
+  if (Array.isArray(raw)) return raw as MessageSourceRef[];
+  if (typeof raw === "string") {
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? (parsed as MessageSourceRef[]) : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
 export function useChat({ sessionId }: UseChatOptions) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [streaming, setStreaming] = useState(false);
@@ -43,14 +56,14 @@ export function useChat({ sessionId }: UseChatOptions) {
         id: string;
         role: "user" | "assistant";
         content: string;
-        sources: MessageSourceRef[];
+        sources: unknown;
       }>;
       setMessages(
         rows.map((m) => ({
           id: m.id,
           role: m.role,
           content: m.content,
-          sources: m.sources ?? [],
+          sources: normalizeSources(m.sources),
         })),
       );
     } finally {
@@ -163,7 +176,9 @@ export function useChat({ sessionId }: UseChatOptions) {
         if (evt.type === "sources" && evt.sources) {
           setMessages((prev) =>
             prev.map((m) =>
-              m.id === assistantId ? { ...m, sources: evt.sources ?? [] } : m,
+              m.id === assistantId
+                ? { ...m, sources: normalizeSources(evt.sources) }
+                : m,
             ),
           );
         } else if (evt.type === "delta" && evt.text) {

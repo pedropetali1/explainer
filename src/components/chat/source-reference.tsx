@@ -12,7 +12,7 @@ interface Props {
 export function SourceReference({ sources }: Props) {
   const [open, setOpen] = useState(false);
 
-  if (sources.length === 0) return null;
+  if (!Array.isArray(sources) || sources.length === 0) return null;
 
   return (
     <div className="mt-3 border rounded-md bg-muted/30">

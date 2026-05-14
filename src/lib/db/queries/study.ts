@@ -90,11 +90,25 @@ export async function deleteSession(id: string, userId: string): Promise<void> {
 
 export async function listMessages(sessionId: string): Promise<MessageRow[]> {
   const sql = getSql();
-  return sql<MessageRow[]>`
+  const rows = await sql<MessageRow[]>`
     SELECT * FROM messages
     WHERE session_id = ${sessionId}
     ORDER BY created_at ASC
   `;
+  return rows.map((m) => ({ ...m, sources: normalizeSources(m.sources) }));
+}
+
+function normalizeSources(raw: unknown): MessageSourceRef[] {
+  if (Array.isArray(raw)) return raw as MessageSourceRef[];
+  if (typeof raw === "string") {
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? (parsed as MessageSourceRef[]) : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
 }
 
 export async function insertMessage(input: {
