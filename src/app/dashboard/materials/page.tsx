@@ -16,18 +16,26 @@ export default async function MaterialsPage() {
   const documents = await listDocuments(user.id);
 
   return (
-    <div className="space-y-6 max-w-3xl">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Materiais</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Faça upload de PDFs para a IA aprender com eles.
+    <div className="space-y-10 max-w-3xl">
+      <header className="space-y-2">
+        <p className="text-xs tracking-widest uppercase text-muted-foreground">
+          Biblioteca
         </p>
-      </div>
+        <h1 className="font-heading text-3xl md:text-4xl tracking-tight leading-tight">
+          Materiais
+        </h1>
+        <p className="text-sm text-muted-foreground max-w-xl leading-relaxed">
+          Faça upload de PDFs para a IA aprender com eles. Cada documento vira
+          base para conversas e questões.
+        </p>
+      </header>
 
       <UploadZone />
 
-      <div>
-        <h2 className="text-sm font-medium mb-3">Seus materiais</h2>
+      <div className="space-y-3">
+        <h2 className="text-xs tracking-widest uppercase text-muted-foreground">
+          Seus materiais
+        </h2>
         <DocumentList documents={documents} />
       </div>
     </div>

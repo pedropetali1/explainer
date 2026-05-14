@@ -70,7 +70,12 @@ export function LoginForm() {
           required
         />
       </div>
-      <Button type="submit" className="w-full" disabled={isPending}>
+      <Button
+        type="submit"
+        variant="accent"
+        className="w-full"
+        disabled={isPending}
+      >
         {isPending ? "Entrando..." : "Entrar"}
       </Button>
       <div className="relative my-2">

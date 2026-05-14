@@ -61,24 +61,30 @@ export function UploadZone() {
     <div
       {...getRootProps()}
       className={cn(
-        "border-2 border-dashed rounded-lg p-10 text-center cursor-pointer transition-colors",
+        "border border-dashed rounded-lg px-6 py-12 text-center cursor-pointer transition-all duration-200",
         isDragActive
-          ? "border-primary bg-primary/5"
-          : "border-muted-foreground/25 hover:border-muted-foreground/50",
+          ? "border-accent bg-accent/5"
+          : "border-border hover:border-foreground/40 hover:bg-muted/30",
         uploading && "opacity-60 cursor-not-allowed",
       )}
     >
       <input {...getInputProps()} />
-      <UploadCloud className="mx-auto h-10 w-10 text-muted-foreground mb-3" />
-      <p className="text-sm font-medium">
+      <UploadCloud
+        className={cn(
+          "mx-auto h-8 w-8 mb-4 transition-colors",
+          isDragActive ? "text-accent" : "text-muted-foreground",
+        )}
+        strokeWidth={1.5}
+      />
+      <p className="font-heading text-xl tracking-tight leading-tight">
         {uploading
           ? "Enviando..."
           : isDragActive
             ? "Solte o PDF aqui"
             : "Arraste um PDF ou clique para selecionar"}
       </p>
-      <p className="text-xs text-muted-foreground mt-1">
-        Máximo 25 MB • até 50 páginas
+      <p className="text-xs text-muted-foreground mt-2 tracking-wide">
+        Máximo 25 MB · até 50 páginas
       </p>
     </div>
   );

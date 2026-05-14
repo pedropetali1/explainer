@@ -42,3 +42,10 @@ next-env.d.ts
 
 #ai
 CLAUDE.md
+
+# mcp (contém token do Supabase)
+.mcp.json
+
+.log*
+.yml
+.playwright*

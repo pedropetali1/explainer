@@ -117,16 +117,19 @@ export function ChatInterface({ sessionId, documentTitle }: Props) {
 
 function EmptyState({ documentTitle }: { documentTitle: string | null }) {
   return (
-    <div className="h-full flex flex-col items-center justify-center text-center px-4 text-muted-foreground">
-      <div className="max-w-md space-y-2">
-        <p className="text-base font-medium text-foreground">
+    <div className="h-full flex flex-col items-center justify-center text-center px-6 text-muted-foreground fade-in">
+      <div className="max-w-md space-y-3">
+        <p className="text-[10px] tracking-widest uppercase text-muted-foreground">
+          {documentTitle ? "Material ativo" : "Pronto para começar"}
+        </p>
+        <h3 className="font-heading text-2xl tracking-tight leading-tight text-foreground">
           {documentTitle
             ? `Estudando "${documentTitle}"`
             : "Pergunte algo para começar"}
-        </p>
-        <p className="text-sm">
-          A IA responde usando exclusivamente seus materiais. Cite a página
-          do PDF para revisar de onde veio a resposta.
+        </h3>
+        <p className="text-sm leading-relaxed">
+          A IA responde usando exclusivamente seus materiais. As referências
+          mostram a página do PDF de onde veio cada parte da resposta.
         </p>
       </div>
     </div>

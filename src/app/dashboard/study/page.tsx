@@ -40,7 +40,7 @@ export default async function StudyPage({ searchParams }: PageProps) {
     : null;
 
   return (
-    <div className="-m-6 flex h-[calc(100vh-3.5rem)] min-h-0">
+    <div className="-mx-8 -my-8 flex h-[calc(100vh-3.5rem)] min-h-0">
       <SessionList
         sessions={sessions}
         documents={documents}
@@ -54,7 +54,9 @@ export default async function StudyPage({ searchParams }: PageProps) {
             documentTitle={activeDocTitle}
           />
         ) : (
-          <NoSessionState hasDocuments={documents.some((d) => d.status === "ready")} />
+          <NoSessionState
+            hasDocuments={documents.some((d) => d.status === "ready")}
+          />
         )}
       </div>
     </div>
@@ -63,10 +65,15 @@ export default async function StudyPage({ searchParams }: PageProps) {
 
 function NoSessionState({ hasDocuments }: { hasDocuments: boolean }) {
   return (
-    <div className="flex-1 flex items-center justify-center px-6">
-      <div className="max-w-md text-center space-y-2">
-        <h2 className="text-lg font-semibold">Comece uma conversa</h2>
-        <p className="text-sm text-muted-foreground">
+    <div className="flex-1 flex items-center justify-center px-6 fade-in">
+      <div className="max-w-md text-center space-y-4">
+        <p className="text-xs tracking-widest uppercase text-muted-foreground">
+          Estudo guiado
+        </p>
+        <h2 className="font-heading text-3xl tracking-tight leading-tight">
+          Comece uma conversa
+        </h2>
+        <p className="text-sm text-muted-foreground leading-relaxed">
           {hasDocuments
             ? 'Clique em "Nova conversa" para começar a estudar com a IA usando seus materiais.'
             : "Faça upload de um PDF na aba Materiais para que a IA possa estudar com você."}

@@ -37,14 +37,14 @@ export function DocumentList({ documents }: Props) {
 
   if (documents.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-muted-foreground border border-dashed border-border rounded-lg px-4 py-6 text-center">
         Nenhum material ainda. Faça upload do seu primeiro PDF.
       </p>
     );
   }
 
   return (
-    <ul className="divide-y rounded-lg border bg-card">
+    <ul className="divide-y divide-border rounded-lg border border-border bg-card overflow-hidden">
       {documents.map((doc) => (
         <DocumentRowItem key={doc.id} doc={doc} />
       ))}
@@ -74,13 +74,15 @@ function DocumentRowItem({ doc }: { doc: DocumentRow }) {
   };
 
   return (
-    <li className="flex items-center gap-3 px-4 py-3">
-      <FileText className="h-5 w-5 text-muted-foreground shrink-0" />
+    <li className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-muted/30">
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-border shrink-0">
+        <FileText className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+      </span>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium truncate">{doc.title}</p>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground mt-0.5">
           {(doc.file_size / 1024 / 1024).toFixed(2)} MB
-          {doc.total_chunks > 0 && ` • ${doc.total_chunks} chunks`}
+          {doc.total_chunks > 0 && ` · ${doc.total_chunks} trechos`}
         </p>
         {doc.status === "error" && doc.error_message && (
           <p className="text-xs text-destructive mt-1">{doc.error_message}</p>
@@ -104,15 +106,17 @@ function DocumentRowItem({ doc }: { doc: DocumentRow }) {
 function StatusBadge({ status }: { status: DocumentRow["status"] }) {
   const map = {
     pending: { Icon: Loader2, cls: "text-muted-foreground animate-spin" },
-    processing: { Icon: Loader2, cls: "text-blue-600 animate-spin" },
-    ready: { Icon: CheckCircle2, cls: "text-green-600" },
+    processing: { Icon: Loader2, cls: "text-accent animate-spin" },
+    ready: { Icon: CheckCircle2, cls: "text-foreground" },
     error: { Icon: AlertCircle, cls: "text-destructive" },
   } as const;
   const { Icon, cls } = map[status];
   return (
-    <span className="flex items-center gap-1.5 text-xs">
-      <Icon className={cn("h-4 w-4", cls)} />
-      <span className="text-muted-foreground">{STATUS_LABEL[status]}</span>
+    <span className="flex items-center gap-2 text-xs tracking-wide">
+      <Icon className={cn("h-3.5 w-3.5", cls)} strokeWidth={1.75} />
+      <span className="text-muted-foreground uppercase text-[10px] tracking-widest">
+        {STATUS_LABEL[status]}
+      </span>
     </span>
   );
 }

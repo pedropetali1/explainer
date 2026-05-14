@@ -22,7 +22,7 @@ export function MessageBubble({ message }: Props) {
     >
       <div
         className={cn(
-          "max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
+          "max-w-[85%] rounded-lg px-4 py-2.5 text-sm leading-relaxed slide-up",
           isUser
             ? "bg-primary text-primary-foreground rounded-br-sm"
             : "bg-muted text-foreground rounded-bl-sm",

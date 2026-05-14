@@ -102,7 +102,7 @@ export function RegisterForm() {
           id="niche"
           value={niche}
           onChange={(e) => setNiche(e.target.value)}
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30"
         >
           {NICHES.map((n) => (
             <option key={n.value} value={n.value}>
@@ -111,7 +111,12 @@ export function RegisterForm() {
           ))}
         </select>
       </div>
-      <Button type="submit" className="w-full" disabled={isPending}>
+      <Button
+        type="submit"
+        variant="accent"
+        className="w-full"
+        disabled={isPending}
+      >
         {isPending ? "Criando..." : "Criar conta"}
       </Button>
       <div className="relative my-2">

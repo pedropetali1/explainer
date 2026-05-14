@@ -61,13 +61,16 @@ export function SessionList({ sessions, documents, activeSessionId }: Props) {
   };
 
   return (
-    <div className="w-72 shrink-0 border-r flex flex-col h-full min-h-0">
-      <div className="p-3 border-b space-y-2">
+    <div className="w-72 shrink-0 border-r flex flex-col h-full min-h-0 bg-sidebar">
+      <div className="px-4 py-5 border-b space-y-3">
+        <p className="text-[10px] tracking-widest uppercase text-muted-foreground">
+          Sessões
+        </p>
         {readyDocs.length > 0 ? (
           <select
             value={selectedDoc}
             onChange={(e) => setSelectedDoc(e.target.value)}
-            className="w-full text-xs rounded-md border bg-background px-2 py-1.5 focus:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            className="w-full text-xs rounded-md border border-border bg-background px-2.5 py-2 transition-colors focus:outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30"
           >
             <option value="">Todos os materiais</option>
             {readyDocs.map((d) => (
@@ -77,13 +80,14 @@ export function SessionList({ sessions, documents, activeSessionId }: Props) {
             ))}
           </select>
         ) : (
-          <p className="text-xs text-muted-foreground px-1">
+          <p className="text-xs text-muted-foreground">
             Nenhum material pronto. Faça upload na aba Materiais.
           </p>
         )}
         <Button
           onClick={onCreate}
           disabled={creating}
+          variant="accent"
           className="w-full"
           size="sm"
         >
@@ -96,9 +100,9 @@ export function SessionList({ sessions, documents, activeSessionId }: Props) {
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-2 space-y-1">
+      <div className="flex-1 overflow-y-auto p-2 space-y-0.5">
         {sessions.length === 0 ? (
-          <p className="text-xs text-muted-foreground px-2 py-3 text-center">
+          <p className="text-xs text-muted-foreground px-3 py-6 text-center">
             Nenhuma conversa ainda.
           </p>
         ) : (
@@ -131,20 +135,23 @@ function SessionItemRow({
   return (
     <div
       className={cn(
-        "group flex items-center gap-2 rounded-md px-2 py-2 text-sm cursor-pointer transition-colors",
+        "group relative flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm cursor-pointer transition-colors duration-150",
         active
           ? "bg-muted text-foreground"
-          : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
       )}
       onClick={() => router.push(`/dashboard/study?session=${session.id}`)}
     >
-      <MessageSquare className="h-4 w-4 shrink-0" />
+      {active && (
+        <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-0.5 rounded-full bg-accent" />
+      )}
+      <MessageSquare className="h-4 w-4 shrink-0" strokeWidth={1.75} />
       <div className="flex-1 min-w-0">
         <p className="truncate text-sm">
           {session.title ?? "Nova conversa"}
         </p>
         {session.document_title && (
-          <p className="truncate text-[10px] text-muted-foreground">
+          <p className="truncate text-[10px] text-muted-foreground mt-0.5 tracking-wide">
             {session.document_title}
           </p>
         )}
